@@ -4,14 +4,18 @@ import SafeWraper from "../wraper/SafeWraper";
 import { Image, Text, View } from "react-native";
 import Logo from "../constant/logo/Logo";
 import { useRouter } from "expo-router";
+import { userInfo, userid } from '../functions/cheker/Id&InfoChaker';
 
 const Index = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, signOut } = useAuth();
   const router = useRouter();
 
   const authCheker = () => {
-    if (!isSignedIn) router.replace("/(auth)");
-    router.replace("/(auth)/Loader");
+    if (isSignedIn && userInfo && userid) {
+      router.replace("/(main)");
+    } else {
+      router.replace("/(auth)");
+    }
   };
   useEffect(() => {
     console.log(isSignedIn);

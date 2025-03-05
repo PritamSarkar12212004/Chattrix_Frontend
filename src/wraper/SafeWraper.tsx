@@ -4,9 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 
 const SafeWraper = ({ children }: any) => {
-  const statusBarBackground = useSelector((state) => state.statusBarBackground);
-  const statusBarContent = useSelector((state) => state.statusBarContent);
-  useEffect(() => {}, [statusBarBackground]);
+  const statusBarBackground = useSelector((state: any) => state.statusBarBackground);
+  const statusBarContent = useSelector((state: any) => state.statusBarContent);
+  useEffect(() => { }, [statusBarBackground]);
   return (
     <>
       <StatusBar
