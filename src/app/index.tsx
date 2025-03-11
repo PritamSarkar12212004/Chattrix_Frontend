@@ -4,10 +4,10 @@ import SafeWraper from "../wraper/SafeWraper";
 import { Image, Text, View } from "react-native";
 import Logo from "../constant/logo/Logo";
 import { useRouter } from "expo-router";
-import { userInfo, userid } from '../functions/cheker/Id&InfoChaker';
+import { userInfo, userid } from "../functions/cheker/Id&InfoChaker";
 
 const Index = () => {
-  const { isSignedIn, signOut } = useAuth();
+  const { isSignedIn } = useAuth();
   const router = useRouter();
 
   const authCheker = () => {

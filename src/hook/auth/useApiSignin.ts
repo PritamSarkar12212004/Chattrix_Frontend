@@ -19,12 +19,16 @@ const useApiSignin = () => {
           userImage: res.data.user.userProfilePic || null,
           userEmail: res.data.user.userEmail || null,
         };
+        const socketid = res.data.user.userId;
         const userKey = {
           userPrivateKey: res.data.user.userPrivateKey.decode_Key,
           userPublicKey: res.data.user.userPublicKey.decode_Key,
         };
+
         Storage.set(AuthTokenName.userInfo, JSON.stringify(userInfo));
         Storage.set(AuthTokenName.userId, JSON.stringify(userKey));
+        Storage.set(AuthTokenName.socketId, JSON.stringify(socketid));
+        console.log(JSON.parse(Storage.getString(AuthTokenName.socketId)));
         router.replace("/(main)");
       })
       .catch((error) => {
