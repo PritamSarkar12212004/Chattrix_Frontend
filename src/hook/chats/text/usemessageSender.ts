@@ -27,6 +27,7 @@ const useMessageSender = () => {
     const senderPublicKey = new Uint8Array(
       Object.values(senderKeys.userPublicKey)
     );
+    console.log(senderPrivateKey,senderPublicKey);
     const receiverPublicKey = new Uint8Array(Object.values(id));
 
     //  accept function

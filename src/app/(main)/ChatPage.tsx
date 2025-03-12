@@ -4,19 +4,19 @@ import {
   TouchableOpacity,
   FlatList,
   Text,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setNavigateInfo } from "@/src/utils/redux/slice/page/NavigateInfo";
+import { useSelector } from "react-redux";
 import ChatsWraper from "@/src/wraper/ChatsWraper";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ChatHeader from "@/src/components/main/header/ChatHeader";
 import usemessageSender from "../../hook/chats/text/usemessageSender";
 import Socket from "@/src/utils/socket.io/Socket";
 import useMessageReceiver from "@/src/hook/chats/text/useMessageRiciver";
+import TextChatShowCard from "@/src/components/main/chats/chatList/TextChatShowCard";
 
 const ChatPage = () => {
-  const dispatch = useDispatch();
   const { sendMessage } = usemessageSender();
   const navigateInfo = useSelector(
     (state: any) => state.NavigateInfo.navigateInfo
@@ -27,11 +27,13 @@ const ChatPage = () => {
 
   useEffect(() => {
     const handleReceiveMessage = (data: any) => {
+      Alert.alert("New Message", data.message);
       textMessageDecoder(data);
     };
+
     Socket.on("receive-message", handleReceiveMessage);
     return () => {
-      Socket.off("receive-message", handleReceiveMessage); // Cleanup to prevent memory leaks
+      Socket.off("receive-message", handleReceiveMessage);
     };
   }, []);
 
@@ -39,8 +41,8 @@ const ChatPage = () => {
     <ChatsWraper>
       <View className="w-full h-full bg-[#181C14]">
         <ChatHeader navigateInfo={navigateInfo} />
-
         <View className="w-full flex-auto relative">
+          {/* Input & Send Button */}
           <View className="w-full flex-row gap-3 h-12 absolute bottom-5 flex items-center justify-center px-3">
             <TextInput
               onChangeText={(text) => setMessage(text)}
@@ -52,15 +54,15 @@ const ChatPage = () => {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
-                if (message.trim() === "") return; // Prevent sending empty messages
+                if (message.trim() === "") return;
 
                 sendMessage({
                   data: message,
-                  id: navigateInfo.userPublicKey.decode_Key,
-                  riciverMongoId: navigateInfo.userMongoId,
+                  id: navigateInfo?.userPublicKey?.decode_Key,
+                  riciverMongoId: navigateInfo?.userMongoId,
                 });
 
-                setMessage(""); // Clear input after sending
+                setMessage("");
               }}
             >
               <Ionicons name="send" size={30} color="green" />

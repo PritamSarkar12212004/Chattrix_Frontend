@@ -32,30 +32,24 @@ const useMessageReceiver = () => {
       receiverPrivateKey
     );
 
+    console.log(decryptedMessage);
     if (!decryptedMessage) {
       throw new Error("Decryption failed");
     }
 
     // Convert to UTF-8 string
     const finalMessage = encodeUTF8(decryptedMessage);
+    console.log(finalMessage);
 
-    const returnData = {
-      message: finalMessage,
-      reciveTime: data.createdAt,
-      textSender: {
-        id: data.textSender._id,
-        userEmail: data.textSender.userEmail,
-        userName: data.textSender.userName,
-        userProfilePic: data.textSender.userProfilePic,
-      },
-      textReceiver: {
-        id: data.textReceiver._id,
-        userEmail: data.textReceiver.userEmail,
-        userName: data.textReceiver.userName,
-        userProfilePic: data.textReceiver.userProfilePic,
-      },
-    };
-    return returnData;
+    // Console log the full decrypted data
+    console.log({
+      decryptedMessage: finalMessage,
+      senderPublicKey: senderPublicKey,
+      receiverPrivateKey: receiverPrivateKey,
+      nonce: nonce,
+    });
+
+    return finalMessage;
   };
 
   return { textMessageDecoder };
