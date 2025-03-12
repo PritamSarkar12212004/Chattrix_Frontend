@@ -14,12 +14,12 @@ const ChatHeader = ({ navigateInfo }: any) => {
         <Feather name="arrow-left" size={24} color="black" />
       </TouchableOpacity>
       <View className="flex flex-row items-center gap-3">
-        <Image
+        {/* <Image
           source={{ uri: navigateInfo.userProfilePic }}
           className="w-10 h-10 rounded-full"
-        />
+        /> */}
         <Text className="text-white text-lg font-bold">
-          {navigateInfo.userName}
+          {/* {navigateInfo.userName} */}
         </Text>
       </View>
     </View>
