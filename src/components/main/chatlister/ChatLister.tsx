@@ -1,14 +1,19 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
+import { userContext } from "@/src/utils/context/ContextApi";
 
 const ChatLister = ({ item }: any) => {
-  console.log(`item`, item.userName);
+  const { setChatListTemp } = userContext();
   const router = useRouter();
+  const ActiveFunc = () => {
+    setChatListTemp(item);
+    router.push("/(chat)/ChatPage")
+  }
   return (
     <>
       <TouchableOpacity
-        onPress={() => router.push("/(chat)/ChatPage")}
+        onPress={() => ActiveFunc()}
         activeOpacity={0.8}
         className="w-full  bg-[#FFFFFF] px-3 py-4 rounded-3xl flex-row items-center  gap-3 mb-5"
       >

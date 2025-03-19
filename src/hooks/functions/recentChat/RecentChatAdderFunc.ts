@@ -1,7 +1,7 @@
 import Token from "@/src/constant/token/Token";
 import Storage from "@/src/utils/mmkv/Storage";
 
-const RecentChatAdderFunc = (contact: any) => {
+const RecentChatAdderFunc = (contact: any, setAllTextMessage: any) => {
   let chats = Storage.getString(Token.recentChat);
   let chatsArray = chats ? JSON.parse(chats) : [];
 
@@ -9,6 +9,7 @@ const RecentChatAdderFunc = (contact: any) => {
   if (!exists) {
     chatsArray.unshift(contact); // Naya contact top pe
     Storage.set(Token.recentChat, JSON.stringify(chatsArray));
+    setAllTextMessage((prev: any) => [prev, ...prev]);
   }
 };
 export default RecentChatAdderFunc;

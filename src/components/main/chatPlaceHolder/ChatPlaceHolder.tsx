@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import useSendText from "@/src/hooks/chat/text/useSendText";
-const ChatPlaceHolder = ({ userData }: any) => {
+const ChatPlaceHolder = ({ userData, setAllTextMessage }: any) => {
 
   const [text, setText] = useState("");
   // call hooks 
   const { sendText } = useSendText()
-  
+
   const senderFunc = () => {
-    sendText(userData, text)
+    sendText(userData, text, setText, setAllTextMessage)
   }
 
   return (

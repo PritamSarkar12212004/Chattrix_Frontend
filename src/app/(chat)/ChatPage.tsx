@@ -6,17 +6,33 @@ import ShowChat from "@/src/components/main/chatlister/ShowChat";
 import ChatPlaceHolder from "@/src/components/main/chatPlaceHolder/ChatPlaceHolder";
 import { userContext } from "@/src/utils/context/ContextApi";
 import useSingleUserDataFetch from "@/src/hooks/chat/dataFetch/useSingleUserDataFetch";
+import useRicivePushmeg from "@/src/hooks/chat/text/useRicivePushmeg";
 
 const ChatPage = () => {
-  const { chatListTemp, setChatListTemp } = userContext();
+  const { chatListTemp, setChatListTemp } = userContext()
   // call hook
   const { dataFetch } = useSingleUserDataFetch();
+  const { recivePushmeg } = useRicivePushmeg()
+
   const [userData, setUserData] = useState(null);
+
+  // allTextMessageData
+  const [allTextMessage, setAllTextMessage] = useState([]);
   const SynceData = async () => {
-    const number = await chatListTemp.phoneNumbers[0].number;
-    dataFetch(number, setUserData);
+    if (typeof chatListTemp === "object") {
+      setUserData(chatListTemp);
+      loadAllTextMessagData(chatListTemp.id); // userData.id ka wait nahi karna
+    } else {
+      const number = await chatListTemp.phoneNumbers[0].number;
+      dataFetch(number, setUserData);
+    }
   };
 
+
+  const loadAllTextMessagData = (id: any) => {
+    console.log(id);
+    recivePushmeg(id, setAllTextMessage);
+  }
   useEffect(() => {
     SynceData();
     return () => {
@@ -24,6 +40,16 @@ const ChatPage = () => {
       setChatListTemp(null);
     };
   }, []);
+
+
+  useEffect(() => {
+    if (userData) {
+      loadAllTextMessagData(userData._id);
+    }
+  }, [userData]);
+  useEffect(() => {
+    console.log(allTextMessage);
+  }, [allTextMessage]);
   return (
     <SafeAreaView className="bg-[#2CB1A9]">
       <View className="w-full  h-full relative">
@@ -34,7 +60,7 @@ const ChatPage = () => {
           </View>
         </ScrollView>
         <View className="w-full absolute bottom-0  ">
-          <ChatPlaceHolder userData={userData} />
+          <ChatPlaceHolder userData={userData} setAllTextMessage={setAllTextMessage} />
         </View>
       </View>
     </SafeAreaView>
