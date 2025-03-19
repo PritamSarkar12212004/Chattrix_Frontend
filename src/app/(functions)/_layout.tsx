@@ -8,7 +8,7 @@ const _layout = () => {
       <StatusBar
         translucent
         backgroundColor="transparent"
-        barStyle="dark-content"
+        barStyle="light-content"
       />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />

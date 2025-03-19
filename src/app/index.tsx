@@ -1,43 +1,26 @@
-import { useAuth } from "@clerk/clerk-expo";
+import { View, Text } from "react-native";
 import React, { useEffect } from "react";
-import SafeWraper from "../wraper/SafeWraper";
-import { Image, Text, View } from "react-native";
-import Logo from "../constant/logo/Logo";
 import { useRouter } from "expo-router";
-import { userInfo, userid } from "../functions/cheker/Id&InfoChaker";
+import Storage from "../utils/mmkv/Storage";
+import Token from "../constant/token/Token";
 
-const Index = () => {
-  const { isSignedIn } = useAuth();
+const index = () => {
   const router = useRouter();
-
-  const authCheker = () => {
-    if (isSignedIn && userInfo && userid) {
-      router.replace("/(main)");
-    } else {
-      router.replace("/(auth)");
-    }
+  const authVarifyer = () => {
+    const auth = Storage.getString(Token.userMainData);
+    if (auth) router.replace("/(main)");
+    else router.replace("/(auth)");
   };
   useEffect(() => {
-    console.log(isSignedIn);
     setTimeout(() => {
-      authCheker();
+      authVarifyer();
     }, 500);
   }, []);
-
   return (
-    <SafeWraper>
-      <View className="w-full h-full bg-black flex items-center justify-center gap-5">
-        <Image
-          source={Logo.MainLogo}
-          className="w-44 h-24"
-          resizeMode="cover"
-        />
-        <Text className="text-blue-500 text-2xl font-bold tracking-widest ">
-          CHATTRIX
-        </Text>
-      </View>
-    </SafeWraper>
+    <View>
+      <Text>index</Text>
+    </View>
   );
 };
 
-export default Index;
+export default index;

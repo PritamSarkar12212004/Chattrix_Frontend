@@ -1,27 +1,40 @@
-import { View, Text, FlatList } from "react-native";
-import React, { useEffect } from "react";
-import SafeWraper from "@/src/wraper/SafeWraper";
-import MainHeader from "@/src/components/main/header/MainHeader";
-import { useSelector } from "react-redux";
-import ChatLits from "@/src/components/main/chats/chatList/ChatLits";
+import { View, Text, StatusBar, ScrollView, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import Header from "@/src/components/main/header/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SearchBar from "@/src/components/main/search/SearchBar";
+import ChatLister from "@/src/components/main/chatlister/ChatLister";
+import RecentChatGet from "@/src/hooks/functions/recentChat/RecentChatGet";
 
 const index = () => {
-  const userChates = useSelector((state: any) => state.chatList);
 
-  useEffect(() => {}, [userChates]);
+  // load recent chats
+  const [recentChats, setRecentChats] = useState([]);
+  const loadChats = () => {
+    const chats = RecentChatGet();
+    setRecentChats(chats);
+  };
+
+  useEffect(() => {
+    loadChats()
+  }, [])
+
+
   return (
-    <SafeWraper>
-      <View className="w-full h-full flex bg-[#181C14] ">
-        <MainHeader />
-        <View className="flex w-full flex-1 ">
-          <FlatList
-            data={userChates}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={(item) => <ChatLits item={item} />}
-          />
+    <SafeAreaView className="w-full h-full bg-[#C5D3FF] ">
+
+      <View className="h-full w-full bg-[#C5D3FF] px-3">
+        <Header />
+        <View className="">
+          <SearchBar />
+          <View className="w-full flex">
+            <FlatList data={recentChats} renderItem={({ item }) => (
+              <ChatLister item={item} />
+            )} />
+          </View>
         </View>
       </View>
-    </SafeWraper>
+    </SafeAreaView>
   );
 };
 
