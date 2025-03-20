@@ -17,13 +17,18 @@ export const ContextProvider = ({ children }: any) => {
   // chatList  get from Server  for the the information temp
   const [chatListTemp, setChatListTemp] = useState(null);
 
+  // text cgat load
+  const [allTextMessage, setAllTextMessage] = useState([]);
+
   useEffect(() => {
     const userData = async () => {
       const data = await JSON.parse(Storage.getString(Token.userMainData));
-      
       setUserDataLocalTemp(data);
     };
     userData();
+    return () => {
+      setUserDataLocalTemp(null);
+    };
   }, [userDataLocalRefresh]);
 
   return (
@@ -40,6 +45,8 @@ export const ContextProvider = ({ children }: any) => {
         setUserDataLocalRefresh,
         chatListTemp,
         setChatListTemp,
+        userDataLocalRefresh,
+        allTextMessage, setAllTextMessage
       }}
     >
       {children}

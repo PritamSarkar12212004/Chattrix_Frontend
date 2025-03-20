@@ -22,7 +22,6 @@ const index = () => {
 
   return (
     <SafeAreaView className="w-full h-full bg-[#C5D3FF] ">
-
       <View className="h-full w-full bg-[#C5D3FF] px-3">
         <Header />
         <View className="">

@@ -6,9 +6,22 @@ import Socket from "@/src/utils/socket/Socket";
 import Storage from "@/src/utils/mmkv/Storage";
 import Token from "@/src/constant/token/Token";
 import useTextRicever from "@/src/hooks/chat/text/useTextRicever";
+import { userContext } from "@/src/utils/context/ContextApi";
 
 const _layout = () => {
   const { reciveText } = useTextRicever()
+  const { setUserDataLocalTemp, userDataLocalRefresh } = userContext()
+  useEffect(() => {
+    const userData = async () => {
+      const data = await JSON.parse(Storage.getString(Token.userMainData));
+      setUserDataLocalTemp(data);
+    };
+    userData();
+    return () => {
+      setUserDataLocalTemp(null);
+    };
+  }, [userDataLocalRefresh]);
+
   useEffect(() => {
     Socket.connect();
     Socket.emit("register", {
