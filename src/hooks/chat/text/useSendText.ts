@@ -9,15 +9,18 @@ const useSendText = () => {
     riciver: any,
     message: any,
     setText: any,
-    setAllTextMessage: any
+    setAllTextMessage: any,
+    backFunction: any
+    
   ) => {
     Socket.emit("send-message", {
       message: message,
       receiverMongoId: riciver._id,
       senderMongoId: userDataLocalTemp._id,
     });
-    RecentChatAdderFunc(riciver,setAllTextMessage);
+    RecentChatAdderFunc(riciver, setAllTextMessage);
     setText("");
+    backFunction && backFunction();
   };
   return {
     sendText,

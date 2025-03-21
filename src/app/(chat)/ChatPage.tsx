@@ -9,14 +9,13 @@ import useSingleUserDataFetch from "@/src/hooks/chat/dataFetch/useSingleUserData
 import useRicivePushmeg from "@/src/hooks/chat/text/useRicivePushmeg";
 
 const ChatPage = () => {
-  const { chatListTemp, setChatListTemp, allTextMessage, setAllTextMessage } = userContext();
+  const { chatListTemp, setChatListTemp, allTextMessage, setAllTextMessage, userData, setUserData } = userContext();
 
   const { dataFetch } = useSingleUserDataFetch();
 
   // call hooks
   const { recivePushmeg } = useRicivePushmeg();
 
-  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false); // For loading indicator
   const [page, setPage] = useState(1); // Pagination page
 
@@ -111,16 +110,12 @@ const ChatPage = () => {
                 keyExtractor={(item, index) => index.toString()} // Use unique id
                 renderItem={({ item }) => <ShowChat item={item} />}
                 onEndReached={handleLoadMore}
-                onEndReachedThreshold={0.5}
+                // onEndReachedThreshold={0.5}
                 initialNumToRender={10}
                 maxToRenderPerBatch={20}
                 windowSize={10}
                 extraData={allTextMessage.length} // Only length (optional)
-                getItemLayout={(data, index) => ({
-                  length: ITEM_HEIGHT,
-                  offset: ITEM_HEIGHT * index,
-                  index,
-                })}
+               
               /> : null
             }
 

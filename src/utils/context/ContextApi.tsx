@@ -20,6 +20,12 @@ export const ContextProvider = ({ children }: any) => {
   // text cgat load
   const [allTextMessage, setAllTextMessage] = useState([]);
 
+  // temImageUri
+  const [tempImage, setTempImage] = useState(null);
+
+  // userdata temp
+  const [userData, setUserData] = useState(null);
+
   useEffect(() => {
     const userData = async () => {
       const data = await JSON.parse(Storage.getString(Token.userMainData));
@@ -46,7 +52,9 @@ export const ContextProvider = ({ children }: any) => {
         chatListTemp,
         setChatListTemp,
         userDataLocalRefresh,
-        allTextMessage, setAllTextMessage
+        allTextMessage, setAllTextMessage,
+        tempImage, setTempImage,
+        userData, setUserData
       }}
     >
       {children}

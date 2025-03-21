@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import useSendText from "@/src/hooks/chat/text/useSendText";
+import { useRouter } from "expo-router";
+
 const ChatPlaceHolder = ({ userData, setAllTextMessage }: any) => {
+  const router = useRouter()
 
   const [text, setText] = useState("");
   // call hooks 
   const { sendText } = useSendText()
-
   const senderFunc = () => {
     sendText(userData, text, setText, setAllTextMessage)
   }
@@ -20,7 +22,7 @@ const ChatPlaceHolder = ({ userData, setAllTextMessage }: any) => {
         <TouchableOpacity>
           <AntDesign name="plus" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => router.push("/(helper)")}>
           <Entypo name="images" size={24} color="black" />
         </TouchableOpacity>
       </View>
