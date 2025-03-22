@@ -9,7 +9,6 @@ import ImageSelectorFunc from '@/src/functions/image/ImageSelectorFunc';
 import useSynceAlbomeImage from '@/src/hooks/chat/albome/useSynceAlbomeImage';
 const AllPhotos = () => {
 
-    const { tempImage, setTempImage } = userContext()
     const [selectedImage, setSelectedImage] = useState(null);
     const [photos, setPhotos] = useState([]);
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
@@ -38,7 +37,7 @@ const AllPhotos = () => {
     // When permission is granted, start fetching photos
     useEffect(() => {
         if (permissionResponse && permissionResponse.status === 'granted') {
-            fetchPhotos({setLoading,hasMore,loading,after,setPhotos,setAfter,setHasMore});
+            fetchPhotos({ setLoading, hasMore, loading, after, setPhotos, setAfter, setHasMore });
         }
     }, [permissionResponse]);
 

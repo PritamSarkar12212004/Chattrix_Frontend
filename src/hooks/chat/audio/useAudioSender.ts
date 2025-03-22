@@ -2,13 +2,13 @@ import { userContext } from "@/src/utils/context/ContextApi";
 import Socket from "@/src/utils/socket/Socket";
 import RecentChatAdderFunc from "../../functions/recentChat/RecentChatAdderFunc";
 
-const useSendText = () => {
+const useAudioSender = () => {
   const { userDataLocalTemp } = userContext();
   // call hooks
+
   const sendText = async (
     riciver: any,
     message: any,
-    setText: any,
     setAllTextMessage: any,
     backFunction: any
   ) => {
@@ -18,7 +18,6 @@ const useSendText = () => {
       senderMongoId: userDataLocalTemp._id,
     });
     RecentChatAdderFunc(riciver, setAllTextMessage);
-    setText("");
     backFunction && backFunction();
   };
   return {
@@ -26,4 +25,4 @@ const useSendText = () => {
   };
 };
 
-export default useSendText;
+export default useAudioSender;

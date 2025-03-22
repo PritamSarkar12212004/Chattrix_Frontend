@@ -7,10 +7,12 @@ import ChatPlaceHolder from "@/src/components/main/chatPlaceHolder/ChatPlaceHold
 import { userContext } from "@/src/utils/context/ContextApi";
 import useSingleUserDataFetch from "@/src/hooks/chat/dataFetch/useSingleUserDataFetch";
 import useRicivePushmeg from "@/src/hooks/chat/text/useRicivePushmeg";
+import BottomSheetExpo from "@/src/components/BottomSheet/BottomSheetExpo";
+import useBottomSheetProp from "@/src/hooks/BottomSheet/useBottomSheetProp";
+import ChatpageBottomSheet from "@/src/components/BottomSheet/chatBottomSheete/ChatpageBottomSheet";
 
 const ChatPage = () => {
   const { chatListTemp, setChatListTemp, allTextMessage, setAllTextMessage, userData, setUserData } = userContext();
-
   const { dataFetch } = useSingleUserDataFetch();
 
   // call hooks
@@ -81,19 +83,8 @@ const ChatPage = () => {
   };
 
 
-
-  // Footer Loader
-  const renderFooter = () => {
-    if (!loading) return null;
-    return (
-      <View style={{ paddingVertical: 20 }}>
-        <ActivityIndicator size="large" color="#2CB1A9" />
-      </View>
-    );
-  };
-
-  // Chat item height (adjust if needed)
-  const ITEM_HEIGHT = 80;
+  // call hooks
+  const { SemiOpen, snapPoints, bottomSheetRef } = useBottomSheetProp();
 
   return (
     <SafeAreaView className="bg-[#2CB1A9] h-full">
@@ -115,16 +106,19 @@ const ChatPage = () => {
                 maxToRenderPerBatch={20}
                 windowSize={10}
                 extraData={allTextMessage.length} // Only length (optional)
-               
+
               /> : null
             }
 
           </View>
         </View>
         <View className="w-full absolute bottom-0">
-          <ChatPlaceHolder userData={userData} setAllTextMessage={setAllTextMessage} />
+          <ChatPlaceHolder userData={userData} setAllTextMessage={setAllTextMessage} SemiOpen={SemiOpen} />
         </View>
       </View>
+      <BottomSheetExpo snapPoints={snapPoints} bottomSheetRef={bottomSheetRef} >
+        <ChatpageBottomSheet bottomSheetRef={bottomSheetRef} />
+      </BottomSheetExpo>
     </SafeAreaView>
   );
 };

@@ -27,6 +27,10 @@ const _layout = () => {
     Socket.emit("register", {
       userId: JSON.parse(Storage.getString(Token.userMainData))._id,
     });
+    Socket.emit("pending-status-cheker", {
+      userId: JSON.parse(Storage.getString(Token.userMainData))._id,
+    });
+
     Socket.on("receive-message", (data) => {
       reciveText(data)
     })
