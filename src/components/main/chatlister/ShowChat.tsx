@@ -103,6 +103,7 @@ const ShowChat = ({ item }: any) => {
         {/* --------------------- Image Message --------------------- */}
         {item?.messageImage && imageSize.width && imageSize.height ? (
           <Image
+
             source={{ uri: item.messageImage }}
             style={{
               width: imageSize.width,
@@ -117,6 +118,20 @@ const ShowChat = ({ item }: any) => {
 
 
 
+        {/* --------------------- Contact --------------------- */}
+
+        {item?.messageContact ? (
+          <View className="flex-row items-center gap-2">
+            <Image
+              source={{ uri: item.messageContact.profileImage }}
+              className="w-10 h-10 rounded-full"
+            />
+            <View>
+              <Text className="font-bold">{item.messageContact.name}</Text>
+              <Text className="text-xs text-gray-500">{item.messageContact?.phoneNumbers[0].number ? item.messageContact.phoneNumbers[0].number : null}</Text>
+            </View>
+          </View>
+        ) : null}
         {/* --------------------- Map --------------------- */}
         {
           item?.messageLocation
@@ -147,6 +162,9 @@ const ShowChat = ({ item }: any) => {
               </View>
             ) : null
         }
+
+
+
         {/* --------------------- Text Message --------------------- */}
         {item.message ? (
           <Text className="text-lg tracking-tight leading-tight">

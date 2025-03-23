@@ -27,7 +27,10 @@ const ChatpageBottomSheet = ({ bottomSheetRef }: any) => {
             icons: <MaterialCommunityIcons name="contacts" size={35} color="white" />,
             title: "Contacts",
             color: "#F29E5C",
-            function: () => { }
+            function: () => {
+                rouetr.push("/(helper)/ContactsSynce")
+                bottomSheetRef.current.close()
+            }
 
         },
         {
